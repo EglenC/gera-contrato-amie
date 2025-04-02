@@ -140,8 +140,11 @@ button:hover {
 
 .contrato-container .centralizado {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
-
 .contrato-container .subitem {
     margin-left: 10mm;
 }
