@@ -153,6 +153,7 @@ button:hover {
     align-items: center;
     width: 100%;
 }
+
 .contrato-container .subitem {
     margin-left: 10mm;
 }
@@ -169,10 +170,7 @@ button:hover {
     display: block;
 }
 
-<<<<<<< HEAD
-=======
 /* Botão de impressão */
->>>>>>> aee4d55f4830e3d184a8598ceb1d9bbc9726b675
 .print-button {
     position: fixed;
     top: 10px;
@@ -184,6 +182,7 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    display: none; /* Esconde o botão por padrão */
 }
 
 .print-button:hover {
@@ -239,7 +238,7 @@ button:hover {
     .print-button, #form-container {
         display: none !important;
     }
-    
+
     body {
         background: #fff;
         padding: 0;
@@ -250,11 +249,14 @@ button:hover {
         margin: 0;
         max-width: 210mm;
         width: 100%;
-        padding: 20mm;
+        padding: 0; /* Remove padding na impressão, já que as margens serão controladas pelo @page */
     }
+
     @page {
-        margin: 0;
+        size: A4;
+        margin: 3mm 2mm 2mm 3mm; /* Topo, Direita, Baixo, Esquerda */
     }
+
     html, body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;

@@ -183,7 +183,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         <p class="representante-legal">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
         <br><br>
         <p class="linha-assinatura"></p>
-        <p><strong>CONTRATANTE:</strong> ${nomeContratante}</p>
+        <p class="representante-legal"><strong>CONTRATANTE:</strong> ${nomeContratante}</p>
     `;
 
     document.getElementById('form-container').style.display = 'none';
