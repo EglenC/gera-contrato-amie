@@ -179,7 +179,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         <p><strong>Fortaleza</strong>, <strong>${dataAssinatura}</strong>;</p>
         <br><br>
         <p class="linha-assinatura"></p>
-        <p><strong>CONTRATADO:</strong> AMIE STORIES</p>
+        <p class="representante-legal"><strong>CONTRATADO:</strong> AMIE STORIES</p>
         <p class="representante-legal">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
         <br><br>
         <p class="linha-assinatura"></p>
