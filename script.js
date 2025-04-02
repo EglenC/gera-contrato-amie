@@ -179,11 +179,11 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         <p><strong>Fortaleza</strong>, <strong>${dataAssinatura}</strong>;</p>
         <br><br>
         <p class="linha-assinatura"></p>
-        <p class="representante-legal"><strong>CONTRATADO:</strong> AMIE STORIES</p>
-        <p class="representante-legal">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
+        <p class="centralizado"><strong>CONTRATADO:</strong> AMIE STORIES</p>
+        <p class="centralizado">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
         <br><br>
         <p class="linha-assinatura"></p>
-        <p class="representante-legal"><strong>CONTRATANTE:</strong> ${nomeContratante}</p>
+        <p class="centralizado"><strong>CONTRATANTE:</strong> ${nomeContratante}</p>
     `;
 
     document.getElementById('form-container').style.display = 'none';
