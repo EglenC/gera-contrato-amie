@@ -98,7 +98,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     let clausulaPagamento = '';
     if (formaPagamento === 'cartao_credito') {
         clausulaPagamento = `
-            <p class="item">4.1. O valor total é de <strong>${formatarValor(valorTotal)}</strong> (${numeroPorExtenso(valorTotal)}), pago via <strong>Cartão de Crédito</strong>:</p>
+            <p class="item">4.1. O valor total é de <strong>${formatarValor(valorTotal)}</strong> (${numeroPorExtenso(valorTotal)} reais), pago via <strong>Cartão de Crédito</strong>:</p>
             <p class="subitem">a) Pago integralmente no ato da assinatura, podendo ser parcelado em até <strong>12 vezes</strong>, com eventuais encargos de parcelamento sendo de responsabilidade do <strong>CONTRATANTE</strong>;</p>
         `;
     } else {
@@ -151,7 +151,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         <p class="item">5.1. Este contrato vigora da data de assinatura até <strong>5 dias úteis</strong> após a data do evento (prazo de entrega), salvo prorrogação por Termo Aditivo;</p>
         <p class="clausula">CLÁUSULA 6ª – RESCISÃO</p>
         <p class="item">6.1. Caso uma das partes deseje rescindir este contrato antes do evento, deverá notificar a outra por escrito com antecedência mínima de <strong>30 dias</strong>;</p>
-        <p class="item">6.2. Em caso de rescisão pelo <strong>CONTRATANTE</strong>, o <strong>CONTRATADO</strong> reterá <strong>30%</strong> do valor total (<strong>${formatarValor(valorRetido)}</strong> - ${numeroPorExtenso(valorRetido)}), a título de compensação pela reserva da data de <strong>${dataEvento}</strong>, que impede a contratação de outros serviços para o mesmo dia, configurando perda de oportunidade. O <strong>CONTRATADO</strong> restituirá eventual saldo remanescente no prazo de <strong>5 dias úteis</strong>;</p>
+        <p class="item">6.2. Em caso de rescisão pelo <strong>CONTRATANTE</strong>, o <strong>CONTRATADO</strong> reterá <strong>30%</strong> do valor total (<strong>${formatarValor(valorRetido)}</strong> - ${numeroPorExtenso(valorRetido)} reais), a título de compensação pela reserva da data de <strong>${dataEvento}</strong>, que impede a contratação de outros serviços para o mesmo dia, configurando perda de oportunidade. O <strong>CONTRATADO</strong> restituirá eventual saldo remanescente no prazo de <strong>5 dias úteis</strong>;</p>
         <p class="item">6.3. Caso a rescisão ocorra por iniciativa do <strong>CONTRATADO</strong>, este restituirá integralmente os valores pagos pelo <strong>CONTRATANTE</strong> no prazo de <strong>5 dias úteis</strong>, acrescidos de correção pelo IPCA, salvo se a rescisão decorrer de descumprimento contratual do <strong>CONTRATANTE</strong>;</p>
         <p class="item">6.4. Em situações de força maior (ex.: catástrofes naturais, conforme art. 393 do Código Civil), que impossibilitem a realização do evento ou do serviço, ambas as partes ficam isentas de responsabilidade, e o <strong>CONTRATADO</strong> devolverá os valores pagos, deduzidos apenas de custos já incorridos e comprovados (ex.: aquisição de materiais específicos);</p>
         <p class="clausula">CLÁUSULA 7ª - INEXISTÊNCIA DE VÍNCULO</p>
