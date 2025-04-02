@@ -14,15 +14,15 @@
                 <legend>Dados do Contratante</legend>
                 <div class="form-row">
                     <label for="nomeContratante">Nome:</label>
-                    <input type="text" id="nomeContratante" required>
+                    <input type="text" id="nomeContratante" aria-label="Nome do contratante" required>
                 </div>
                 <div class="form-row">
-                    <label for="cpfContratante">CPF:</label>
-                    <input type="text" id="cpfContratante" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required>
+                    <label for="cpfContratante">CPF (apenas números):</label>
+                    <input type="text" id="cpfContratante" pattern="\d{11}" title="Digite 11 números" aria-label="CPF do contratante (apenas números)" required>
                 </div>
                 <div class="form-row">
                     <label for="enderecoContratante">Endereço:</label>
-                    <input type="text" id="enderecoContratante" required>
+                    <input type="text" id="enderecoContratante" aria-label="Endereço do contratante" required>
                 </div>
             </fieldset>
 
@@ -30,27 +30,27 @@
                 <legend>Detalhes do Evento</legend>
                 <div class="form-row">
                     <label for="dataEvento">Data:</label>
-                    <input type="date" id="dataEvento" required>
+                    <input type="date" id="dataEvento" aria-label="Data do evento" required>
                 </div>
                 <div class="form-row">
                     <label for="localCerimonia">Local da Cerimônia:</label>
-                    <input type="text" id="localCerimonia" required>
+                    <input type="text" id="localCerimonia" aria-label="Local da cerimônia" required>
                 </div>
                 <div class="form-row">
                     <label for="localRecepcao">Local da Recepção:</label>
-                    <input type="text" id="localRecepcao" required>
+                    <input type="text" id="localRecepcao" aria-label="Local da recepção" required>
                 </div>
                 <div class="form-row">
                     <label for="horaInicio">Início da Cerimônia:</label>
-                    <input type="time" id="horaInicio" required>
+                    <input type="time" id="horaInicio" aria-label="Horário de início da cerimônia" required>
                 </div>
                 <div class="form-row">
                     <label for="horaInicio2">Início da Recepção:</label>
-                    <input type="time" id="horaInicio2" required>
+                    <input type="time" id="horaInicio2" aria-label="Horário de início da recepção" required>
                 </div>
                 <div class="form-row">
                     <label for="horaFim">Fim do Evento:</label>
-                    <input type="time" id="horaFim" required>
+                    <input type="time" id="horaFim" aria-label="Horário de fim do evento" required>
                 </div>
             </fieldset>
 
@@ -58,15 +58,15 @@
                 <legend>Detalhes do Pacote</legend>
                 <div class="form-row">
                     <label for="pacote">Nome do Pacote:</label>
-                    <input type="text" id="pacote" required>
+                    <input type="text" id="pacote" aria-label="Nome do pacote" required>
                 </div>
                 <div class="form-row">
                     <label for="valorTotal">Valor Total (R$):</label>
-                    <input type="number" id="valorTotal" step="50" min="0" required>
+                    <input type="text" id="valorTotal" pattern="[0-9]*\.?[0-9]+" title="Digite apenas números" aria-label="Valor total em reais" required>
                 </div>
                 <div class="form-row">
                     <label for="entrada">Entrada (R$):</label>
-                    <input type="number" id="entrada" step="50" min="0" required>
+                    <input type="text" id="entrada" pattern="[0-9]*\.?[0-9]+$" title="Digite apenas números" aria-label="Valor da entrada em reais" required>
                 </div>
             </fieldset>
 
@@ -74,7 +74,7 @@
                 <legend>Forma de Pagamento</legend>
                 <div class="form-row">
                     <label for="formaPagamento">Escolha a forma de pagamento:</label>
-                    <select id="formaPagamento" required>
+                    <select id="formaPagamento" aria-label="Forma de pagamento" required>
                         <option value="pix" selected>PIX</option>
                         <option value="cartao_credito">Cartão de Crédito</option>
                         <option value="cartao_debito">Cartão de Débito</option>
@@ -88,7 +88,7 @@
         </form>
     </div>
 
-    <div class="contrato-container" id="contrato" style="display: none;"></div>
+    <div class="contrato-container hidden" id="contrato"></div>
     <button class="print-button" id="print-button" onclick="window.print()">Imprimir</button>
     <script src="script.js"></script>
 </body>

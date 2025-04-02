@@ -2,7 +2,8 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const nomeContratante = document.getElementById('nomeContratante').value;
-    const cpfContratante = document.getElementById('cpfContratante').value;
+    const cpfRaw = document.getElementById('cpfContratante').value;
+    const cpfContratante = cpfRaw.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     const enderecoContratante = document.getElementById('enderecoContratante').value;
     const dataEvento = new Date(document.getElementById('dataEvento').value).toLocaleDateString('pt-BR');
     const localCerimonia = document.getElementById('localCerimonia').value;
@@ -16,64 +17,72 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     const formaPagamento = document.getElementById('formaPagamento').value;
     const dataAssinatura = new Date().toLocaleDateString('pt-BR');
 
-    // Função para calcular a duração em horas (sem decimais)
-    const calcularDuracao = (inicio, fim) => {
-        const [inicioHoras, inicioMinutos] = inicio.split(':').map(Number);
-        const [fimHoras, fimMinutos] = fim.split(':').map(Number);
+    // Validação de horários
+    const [inicioHoras, inicioMinutos] = horaInicio.split(':').map(Number);
+    const [fimHoras, fimMinutos] = horaFim.split(':').map(Number);
+    const inicioEmMinutos = inicioHoras * 60 + inicioMinutos;
+    let fimEmMinutos = fimHoras * 60 + fimMinutos;
+    if (fimEmMinutos <= inicioEmMinutos) fimEmMinutos += 24 * 60;
+    if (fimEmMinutos <= inicioEmMinutos) {
+        alert('O horário de fim deve ser posterior ao início.');
+        return;
+    }
+    const duracao = Math.round((fimEmMinutos - inicioEmMinutos) / 60);
 
-        const inicioEmMinutos = inicioHoras * 60 + inicioMinutos;
-        let fimEmMinutos = fimHoras * 60 + fimMinutos;
+    // Validação da entrada mínima (30% do valor total)
+    if (entrada < valorTotal * 0.3) {
+        alert('A entrada deve ser pelo menos 30% do valor total.');
+        return;
+    }
 
-        if (fimEmMinutos < inicioEmMinutos) {
-            fimEmMinutos += 24 * 60;
-        }
-
-        const duracaoEmMinutos = fimEmMinutos - inicioEmMinutos;
-        return Math.round(duracaoEmMinutos / 60);
-    };
-
-    const duracao = calcularDuracao(horaInicio, horaFim);
-
-    // Função para formatar valores no padrão brasileiro
+    // Função para formatar valores
     const formatarValor = (valor) => {
         return `R$ ${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
-    // Função para converter número em extenso (simplificada)
+    // Função otimizada para número por extenso
     const numeroPorExtenso = (valor) => {
         const unidades = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
-        const dezenas = ['dez', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
-        const centenas = ['cem', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
-        const milhares = 'mil';
+        const especiais = ['dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
+        const dezenas = ['vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
+        const centenas = ['cem', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
 
-        let valorInteiro = Math.floor(valor);
-        let centavos = Math.round((valor - valorInteiro) * 100);
-
+        let inteiro = Math.floor(valor);
+        let centavos = Math.round((valor - inteiro) * 100);
         let extenso = '';
-        if (valorInteiro >= 1000) {
-            const milhar = Math.floor(valorInteiro / 1000);
-            extenso += `${unidades[milhar]} ${milhares}`;
-            valorInteiro %= 1000;
-            if (valorInteiro > 0) extenso += ' e ';
+
+        if (inteiro === 0) return 'zero';
+
+        if (inteiro >= 1000) {
+            const milhar = Math.floor(inteiro / 1000);
+            extenso += milhar === 1 ? 'mil' : `${numeroPorExtenso(milhar)} mil`;
+            inteiro %= 1000;
+            if (inteiro > 0) extenso += inteiro < 100 ? ' e ' : ', ';
         }
-        if (valorInteiro >= 100) {
-            const centena = Math.floor(valorInteiro / 100);
-            extenso += centenas[centena - 1];
-            valorInteiro %= 100;
-            if (valorInteiro > 0) extenso += ' e ';
+
+        if (inteiro >= 100) {
+            const centena = Math.floor(inteiro / 100);
+            extenso += centena === 1 && inteiro % 100 === 0 ? 'cem' : centenas[centena];
+            inteiro %= 100;
+            if (inteiro > 0) extenso += ' e ';
         }
-        if (valorInteiro >= 20) {
-            const dezena = Math.floor(valorInteiro / 10);
-            extenso += dezenas[dezena - 1];
-            valorInteiro %= 10;
-            if (valorInteiro > 0) extenso += ' e ';
+
+        if (inteiro >= 20) {
+            const dezena = Math.floor(inteiro / 10);
+            extenso += dezenas[dezena - 2];
+            inteiro %= 10;
+            if (inteiro > 0) extenso += ' e ';
+        } else if (inteiro >= 10) {
+            extenso += especiais[inteiro - 10];
+            inteiro = 0;
         }
-        if (valorInteiro > 0) {
-            extenso += unidades[valorInteiro];
+
+        if (inteiro > 0) {
+            extenso += unidades[inteiro];
         }
 
         if (centavos > 0) {
-            extenso += ` e ${centavos} centavos`;
+            extenso += ` e ${numeroPorExtenso(centavos)} centavos`;
         }
 
         return extenso;
@@ -89,12 +98,12 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     };
     const formaPagamentoTexto = formasPagamento[formaPagamento] || 'PIX';
 
-    // Calcular valores
+    // Cálculos
     const percentualEntrada = ((entrada / valorTotal) * 100).toFixed(2);
     const diferenca = valorTotal - entrada;
-    const valorRetido = valorTotal * 0.30; // 30% do valor total
+    const valorRetido = valorTotal * 0.30;
 
-    // Cláusula 4 condicional
+    // Cláusula de pagamento
     let clausulaPagamento = '';
     if (formaPagamento === 'cartao_credito') {
         clausulaPagamento = `
@@ -110,7 +119,6 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         `;
     }
 
-    // Cláusula 4.3 (multas e juros) condicional
     const clausulaMultas = formaPagamento !== 'cartao_credito' ? `
         <p class="item">4.3. Atrasos incorrerão em multa de <strong>2%</strong>, juros de <strong>1%</strong> ao mês e correção pelo IPCA;</p>
     ` : '';
@@ -172,7 +180,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         <br><br>
         <p class="linha-assinatura"></p>
         <p><strong>CONTRATADO:</strong> AMIE STORIES</p>
-        <p class="centralizado">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
+        <p class="representante-legal">Representante Legal: Amanda Firmiano de Oliveira Costa</p>
         <br><br>
         <p class="linha-assinatura"></p>
         <p><strong>CONTRATANTE:</strong> ${nomeContratante}</p>
@@ -180,6 +188,6 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
 
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('contrato').innerHTML = contratoHTML;
-    document.getElementById('contrato').style.display = 'block';
+    document.getElementById('contrato').classList.remove('hidden');
     document.getElementById('print-button').style.display = 'block';
 });
